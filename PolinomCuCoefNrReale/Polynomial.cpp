@@ -18,6 +18,19 @@ const int Polynomial::get_degree()
 
 void Polynomial::set_degree(const int& degree)
 {
-	this->m_degree = degree;
+	m_degree = degree;
+}
+
+Polynomial Polynomial::operator+()
+{
+	return *this;
+}
+
+Polynomial Polynomial::operator-()
+{
+	for (int i = 0; i < this->m_coeff.size(); i++) {
+		this->m_coeff[i] *= -1;
+	}
+	return *this;
 }
 
