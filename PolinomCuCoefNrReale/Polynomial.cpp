@@ -7,12 +7,6 @@ Polynomial::Polynomial(std::vector<double> coeff) :
 {
 }
 
-Polynomial::Polynomial(const Polynomial & p)
-{
-	this->m_coeff = p.m_coeff;
-	this->m_degree = p.m_degree;
-}
-
 Polynomial::~Polynomial()
 {
 }
@@ -22,24 +16,22 @@ const int Polynomial::get_degree()
 	return m_degree;
 }
 
+void Polynomial::set_degree(const int& degree)
+{
+	m_degree = degree;
+}
+
 Polynomial Polynomial::operator+()
 {
-	Polynomial p = *this;
-	return p;
+	return *this;
 }
 
 Polynomial Polynomial::operator-()
 {
-	/*for (int i = 0; i < this->m_coeff.size(); i++) {
+	for (int i = 0; i < this->m_coeff.size(); i++) {
 		this->m_coeff[i] *= -1;
 	}
-	return *this;*/
-
-	Polynomial p = *this;
-	for (int i = 0; i < p.m_coeff.size(); i++) {
-		p.m_coeff[i] *= -1;
-	}
-	return p;
+	return *this;
 }
 
 Polynomial operator+(const Polynomial & a, const Polynomial & b)
@@ -123,55 +115,4 @@ Polynomial operator-(const Polynomial & a, double x)
 	b.m_coeff[b.m_coeff.size() - 1] -= x;
 
 	return b;
-}
-
-Polynomial operator*(const Polynomial & a, const Polynomial & b)
-{
-	Polynomial c;
-	int deg = a.m_degree + b.m_degree;
-	c.m_coeff.resize(deg + 1);
-	c.m_degree = deg;
-
-	std::cout << "deg: " << c.m_degree << "\n\n";
-
-	for (int i = 0; i < c.m_coeff.size(); i++) {
-		// degree of x: m_degree - i
-		// we need: a.m_degree - j + b.m_degree - k = m_deg - i
-	
-		c.m_coeff[i] = 0;
-		for (int j = 0; j < a.m_coeff.size(); j++) {
-			// j - index of element in a
-			// k - index of elemnt in b
-
-			int k = i - c.m_degree + a.m_degree - j + b.m_degree;
-
-
-			if (k >= 0 && k <= b.m_degree) {
-				c.m_coeff[i] += a.m_coeff[j] * b.m_coeff[k];
-			}
-		}
-	}
-
-	return c;
-
-}
-
-Polynomial operator*(double x, const Polynomial & p)
-{
-	Polynomial r = p;
-	for (int i = 0; i < r.m_coeff.size(); i++) {
-		r.m_coeff[i] *= x;
-	}
-
-	return r;
-}
-
-Polynomial operator*(const Polynomial & p, double x)
-{
-	Polynomial r = p;
-	for (int i = 0; i < r.m_coeff.size(); i++) {
-		r.m_coeff[i] *= x;
-	}
-
-	return r;
 }
