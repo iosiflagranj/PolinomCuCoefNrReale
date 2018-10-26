@@ -6,11 +6,11 @@ class Polynomial
 {
 public:
 	Polynomial(std::vector<double> = std::vector<double>(1, 0));
+	Polynomial(const Polynomial &);
 	~Polynomial();
 
 	//Getters + Setters
 	const int get_degree();
-	void set_degree(const int&);
 
 	//Unary operators
 	Polynomial operator+();
@@ -24,6 +24,10 @@ public:
 	friend Polynomial operator-(const Polynomial &, const Polynomial &);
 	friend Polynomial operator-(double, const Polynomial &);
 	friend Polynomial operator-(const Polynomial &, double);
+
+	friend Polynomial operator*(const Polynomial &, const Polynomial &);
+	friend Polynomial operator*(double, const Polynomial &);
+	friend Polynomial operator*(const Polynomial &, double);
 
 	//This will be removed after implementing the << operator
 	void Print()
