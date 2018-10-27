@@ -112,6 +112,12 @@ double & Polynomial::operator[](const int & deg)
 	return this->m_coeff.at(this->m_degree - deg);
 }
 
+Polynomial::operator std::string() const
+{
+	Polynomial p = *this;
+	return p.ToString();
+}
+
 std::string Polynomial::ToString()
 {
 	std::string string = "";

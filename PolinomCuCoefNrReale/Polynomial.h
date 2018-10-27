@@ -71,6 +71,9 @@ public:
 	double operator()(const double &);
 	double& operator[](const int &);
 
+	//Conversion Operator
+	operator std::string() const;
+
 	//Methods
 	std::string ToString();
 
