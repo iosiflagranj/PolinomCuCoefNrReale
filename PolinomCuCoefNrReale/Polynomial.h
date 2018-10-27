@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <stdexcept>
 #include <iostream>
 
 class Polynomial
@@ -32,6 +33,10 @@ public:
 	friend Polynomial operator/(const Polynomial &, const Polynomial &);
 	friend Polynomial operator/(double, const Polynomial &);
 	friend Polynomial operator/(const Polynomial &, double);
+
+	friend Polynomial operator%(const Polynomial &, const Polynomial &);
+	friend Polynomial operator%(double, const Polynomial &);
+	friend Polynomial operator%(const Polynomial &, double);
 
 	//This will be removed after implementing the << operator
 	void Print()
