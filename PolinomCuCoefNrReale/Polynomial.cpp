@@ -112,6 +112,42 @@ double & Polynomial::operator[](const int & deg)
 	return this->m_coeff.at(this->m_degree - deg);
 }
 
+std::string Polynomial::ToString()
+{
+	std::string string = "";
+	if (this->m_degree == 0 && this->m_coeff[0] == 0) {
+		string = "0";
+		return string;
+	}
+
+	if (this->m_coeff[this->m_coeff.size() - 1] != 0) {
+		string += std::to_string(this->m_coeff[this->m_coeff.size() - 1]);
+	}
+
+	for (int i = this->m_coeff.size() - 2; i >= 0; i--) {
+		if (this->m_coeff[i] == 0) {
+			//Do nothing
+		}
+		else {
+			if (this->m_coeff[i] < 0) {
+				string += " - "; string += std::to_string(abs(this->m_coeff[i]));
+			}
+			else {
+				string += " + "; string +=std::to_string (this->m_coeff[i]);
+			}
+
+			if (this->m_degree - i > 1) {
+				string += "*x^"; string += std::to_string(this->m_degree - i);
+			}
+			else {
+				string += "*x";
+			}
+		}
+	}
+
+	return string;
+}
+
 Polynomial operator+(const Polynomial & a, const Polynomial & b)
 {
 	Polynomial c;

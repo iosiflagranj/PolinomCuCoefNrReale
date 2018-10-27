@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdexcept>
 #include <cmath>
+#include <string>
 #include <iostream>
 
 class Polynomial
@@ -69,6 +70,9 @@ public:
 	//Other Operators
 	double operator()(const double &);
 	double& operator[](const int &);
+
+	//Methods
+	std::string ToString();
 
 	//This will be removed after implementing the << operator
 	void Print()
