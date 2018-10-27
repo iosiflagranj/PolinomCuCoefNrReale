@@ -273,7 +273,6 @@ Polynomial operator%(double x, const Polynomial & p)
 	}
 
 	if ((int)x != x || (int)p.m_coeff[0] != p.m_coeff[0]) {
-		throw std::invalid_argument("not all numbers are ints. Cannot perform remainder division");
 		return r;
 	}
 
@@ -292,11 +291,20 @@ Polynomial operator%(const Polynomial & p, double x)
 
 
 	if ((int)x != x || (int)p.m_coeff[0] != p.m_coeff[0]) {
-		throw std::invalid_argument("not all numbers are ints. Cannot perform remainder division");
 		return r;
 	}
 
 	r.m_coeff[0] = (int)p.m_coeff[0] % (int)x;
+	return r;
+}
+
+Polynomial operator^(const Polynomial & p, int pow)
+{
+	Polynomial r = p;
+	for (int i = 1; i < pow; i++) {
+		r = r * p;
+	}
+
 	return r;
 }
 
