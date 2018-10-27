@@ -30,11 +30,6 @@ Polynomial Polynomial::operator+()
 
 Polynomial Polynomial::operator-()
 {
-	/*for (int i = 0; i < this->m_coeff.size(); i++) {
-		this->m_coeff[i] *= -1;
-	}
-	return *this;*/
-
 	Polynomial p = *this;
 	for (int i = 0; i < p.m_coeff.size(); i++) {
 		p.m_coeff[i] *= -1;
@@ -48,7 +43,7 @@ Polynomial & Polynomial::operator+=(const Polynomial & p)
 	return *this;
 }
 
-Polynomial & Polynomial::operator+=(const int & x)
+Polynomial & Polynomial::operator+=(const double & x)
 {
 	this->m_coeff[this->m_coeff.size() - 1] += x;
 	return *this;
@@ -60,9 +55,21 @@ Polynomial & Polynomial::operator-=(const Polynomial & p)
 	return *this;
 }
 
-Polynomial & Polynomial::operator-=(const int & x)
+Polynomial & Polynomial::operator-=(const double & x)
 {
 	this->m_coeff[this->m_coeff.size() - 1] -= x;
+	return *this;
+}
+
+Polynomial & Polynomial::operator*=(const Polynomial & p)
+{
+	*this = *this * p;
+	return *this;
+}
+
+Polynomial & Polynomial::operator*=(const double & x)
+{
+	*this = *this * x;
 	return *this;
 }
 
@@ -155,8 +162,6 @@ Polynomial operator*(const Polynomial & a, const Polynomial & b)
 	int deg = a.m_degree + b.m_degree;
 	c.m_coeff.resize(deg + 1);
 	c.m_degree = deg;
-
-	std::cout << "deg: " << c.m_degree << "\n\n";
 
 	for (int i = 0; i < c.m_coeff.size(); i++) {
 		// degree of x: m_degree - i
