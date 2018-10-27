@@ -175,3 +175,56 @@ Polynomial operator*(const Polynomial & p, double x)
 
 	return r;
 }
+
+Polynomial operator/(const Polynomial & a, const Polynomial & b)
+{
+	Polynomial q, dividend = a, divisor = b;
+	if (divisor.m_degree > dividend.m_degree) {
+		return q; //Return 0, the division is impossible
+	}
+
+	q.m_degree = dividend.m_degree - divisor.m_degree;
+	q.m_coeff.resize(q.m_degree + 1);
+
+	for (int i = 0; i < q.m_coeff.size(); i++) {
+		q.m_coeff[i] = dividend.m_coeff[0] / divisor.m_coeff[0];
+
+		int degreeOffset = dividend.m_degree - divisor.m_degree;
+		divisor.m_degree += degreeOffset;
+		for (int j = 0; j < degreeOffset; j++) {
+			divisor.m_coeff.push_back(0);
+		}
+		
+		dividend = dividend - (divisor * q.m_coeff[i]);
+
+		divisor.m_degree -= degreeOffset;
+		for (int j = 0; j < degreeOffset; j++) {
+			divisor.m_coeff.pop_back();
+		}
+		dividend.m_degree -= 1;
+		dividend.m_coeff.erase(dividend.m_coeff.begin());
+	}
+
+	return q;
+}
+
+Polynomial operator/(double x, const Polynomial & p)
+{
+	Polynomial q;
+	if (p.m_degree != 0) {
+		return q;
+	}
+	
+	q.m_coeff[0] = x / p.m_coeff[0];
+	return q;
+}
+
+Polynomial operator/(const Polynomial & p, double x)
+{
+	Polynomial r = p;
+	for (int i = 0; i < r.m_coeff.size(); i++) {
+		r.m_coeff[i] /= x;
+	}
+
+	return r;
+}
