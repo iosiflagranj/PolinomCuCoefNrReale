@@ -18,6 +18,9 @@ public:
 	Polynomial operator-();
 
 	//Binary Operators
+	Polynomial& operator+=(const Polynomial &);
+	Polynomial& operator+=(const int &);
+
 	friend Polynomial operator+(const Polynomial &, const Polynomial &);
 	friend Polynomial operator+(double, const Polynomial &);
 	friend Polynomial operator+(const Polynomial &, double);

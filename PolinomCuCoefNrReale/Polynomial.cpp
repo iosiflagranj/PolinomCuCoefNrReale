@@ -42,6 +42,18 @@ Polynomial Polynomial::operator-()
 	return p;
 }
 
+Polynomial & Polynomial::operator+=(const Polynomial & p)
+{
+	*this = *this + p;
+	return *this;
+}
+
+Polynomial & Polynomial::operator+=(const int & x)
+{
+	this->m_coeff[this->m_coeff.size() - 1] += x;
+	return *this;
+}
+
 Polynomial operator+(const Polynomial & a, const Polynomial & b)
 {
 	Polynomial c;
