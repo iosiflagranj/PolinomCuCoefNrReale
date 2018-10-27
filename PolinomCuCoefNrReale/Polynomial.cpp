@@ -85,6 +85,18 @@ Polynomial & Polynomial::operator/=(const double & x)
 	return *this;
 }
 
+Polynomial & Polynomial::operator%=(const Polynomial & p)
+{
+	*this = *this % p;
+	return *this;
+}
+
+Polynomial & Polynomial::operator%=(const double & x)
+{
+	*this = *this % x;
+	return *this;
+}
+
 Polynomial operator+(const Polynomial & a, const Polynomial & b)
 {
 	Polynomial c;
