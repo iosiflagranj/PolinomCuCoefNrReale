@@ -361,3 +361,50 @@ Polynomial operator^(const Polynomial & p, int pow)
 	return r;
 }
 
+bool operator==(const Polynomial & a, const Polynomial & b)
+{
+	if (a.m_degree == b.m_degree) {
+		for (int i = 0; i < a.m_coeff.size(); i++) {
+			if (a.m_coeff[i] != b.m_coeff[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool operator==(const double & x, const Polynomial & p)
+{
+	return (p.m_degree == 0 && p.m_coeff[0] == x);
+}
+
+bool operator==(const Polynomial & p, const double & x)
+{
+	return (p.m_degree == 0 && p.m_coeff[0] == x);
+}
+
+bool operator!=(const Polynomial & a, const Polynomial & b)
+{
+	if (a.m_degree == b.m_degree) {
+		for (int i = 0; i < a.m_coeff.size(); i++) {
+			if (a.m_coeff[i] != b.m_coeff[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+	return true;
+}
+
+bool operator!=(const double & x, const Polynomial & p)
+{
+	return (p.m_degree != 0 || p.m_coeff[0] != x);
+}
+
+bool operator!=(const Polynomial & p, const double & x)
+{
+	return (p.m_degree != 0 || p.m_coeff[0] != x);
+}
+
+

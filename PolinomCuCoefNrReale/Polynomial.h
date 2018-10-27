@@ -56,6 +56,15 @@ public:
 
 	friend Polynomial operator^(const Polynomial &, int);
 
+	//Logical Operators
+	friend bool operator==(const Polynomial &, const Polynomial &);
+	friend bool operator==(const double &, const Polynomial &);
+	friend bool operator==(const Polynomial &, const double &);
+
+	friend bool operator!=(const Polynomial &, const Polynomial &);
+	friend bool operator!=(const double &, const Polynomial &);
+	friend bool operator!=(const Polynomial &, const double &);
+
 	//This will be removed after implementing the << operator
 	void Print()
 	{
