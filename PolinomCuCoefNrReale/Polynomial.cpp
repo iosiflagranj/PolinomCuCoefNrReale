@@ -97,6 +97,21 @@ Polynomial & Polynomial::operator%=(const double & x)
 	return *this;
 }
 
+double Polynomial::operator()(const double & x)
+{
+	double r = this->m_coeff[this->m_coeff.size() - 1];
+	for (int i = 0; i < this->m_coeff.size() - 1; i++) {
+		r += this->m_coeff[i] * pow(x, this->m_degree - i);
+	}
+
+	return r;
+}
+
+double & Polynomial::operator[](const int & deg)
+{
+	return this->m_coeff.at(this->m_degree - deg);
+}
+
 Polynomial operator+(const Polynomial & a, const Polynomial & b)
 {
 	Polynomial c;

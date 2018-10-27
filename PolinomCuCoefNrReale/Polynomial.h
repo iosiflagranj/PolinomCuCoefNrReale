@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <stdexcept>
+#include <cmath>
 #include <iostream>
 
 class Polynomial
@@ -64,6 +65,10 @@ public:
 	friend bool operator!=(const Polynomial &, const Polynomial &);
 	friend bool operator!=(const double &, const Polynomial &);
 	friend bool operator!=(const Polynomial &, const double &);
+
+	//Other Operators
+	double operator()(const double &);
+	double& operator[](const int &);
 
 	//This will be removed after implementing the << operator
 	void Print()
