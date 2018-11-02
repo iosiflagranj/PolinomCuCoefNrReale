@@ -74,6 +74,10 @@ public:
 	//Conversion Operator
 	operator std::string() const;
 
+	// I/O Operators
+	friend std::istream & operator>>(std::istream &, Polynomial &);
+	friend std::ostream & operator<<(std::ostream &, const Polynomial &);
+
 	//Methods
 	std::string ToString();
 

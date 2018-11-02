@@ -126,20 +126,30 @@ std::string Polynomial::ToString()
 		return string;
 	}
 
+	// The constant term
 	if (this->m_coeff[this->m_coeff.size() - 1] != 0) {
 		string += std::to_string(this->m_coeff[this->m_coeff.size() - 1]);
 	}
 
 	for (int i = this->m_coeff.size() - 2; i >= 0; i--) {
 		if (this->m_coeff[i] == 0) {
-			//Do nothing
+			// Do nothing
 		}
 		else {
 			if (this->m_coeff[i] < 0) {
-				string += " - "; string += std::to_string(abs(this->m_coeff[i]));
+				if (string == "")
+					string += "-";
+				else
+					string += " - ";
+
+				string += std::to_string(abs(this->m_coeff[i]));
 			}
+
 			else {
-				string += " + "; string +=std::to_string (this->m_coeff[i]);
+				if (string != "") {
+					string += " + ";
+				}
+				string +=std::to_string (this->m_coeff[i]); 
 			}
 
 			if (this->m_degree - i > 1) {
@@ -286,6 +296,7 @@ Polynomial operator*(const Polynomial & p, double x)
 	return r;
 }
 
+
 Polynomial operator/(const Polynomial & a, const Polynomial & b)
 {
 	Polynomial q, dividend = a, divisor = b;
@@ -375,36 +386,23 @@ Polynomial operator%(const Polynomial & a, const Polynomial & b)
 
 Polynomial operator%(double x, const Polynomial & p)
 {
-	Polynomial r;
+	Polynomial r, q;
+	q.m_coeff[0] = x;
+	q.m_degree = 0;
 
-	if (p.m_degree > 0) {
-		r.m_coeff[0] = x;
-		return r;
-	}
+	r = q % p;
 
-	if ((int)x != x || (int)p.m_coeff[0] != p.m_coeff[0]) {
-		return r;
-	}
-
-	r.m_coeff[0] = (int)x % (int)p.m_coeff[0];
 	return r;
 }
 
 Polynomial operator%(const Polynomial & p, double x)
 {
-	Polynomial r;
+	Polynomial r, q;
+	q.m_coeff[0] = x;
+	q.m_degree = 0;
 
-	if (p.m_degree > 0) {
-		return r;
-	}
+	r = p % q;
 
-
-
-	if ((int)x != x || (int)p.m_coeff[0] != p.m_coeff[0]) {
-		return r;
-	}
-
-	r.m_coeff[0] = (int)p.m_coeff[0] % (int)x;
 	return r;
 }
 
@@ -462,6 +460,115 @@ bool operator!=(const double & x, const Polynomial & p)
 bool operator!=(const Polynomial & p, const double & x)
 {
 	return (p.m_degree != 0 || p.m_coeff[0] != x);
+}
+
+std::istream & operator>>(std::istream & stream, Polynomial & p)
+{
+	std::string string;
+	char ch; stream.get(ch);
+	while (ch != '\n' && !stream.eof()) {
+		string += ch;
+		stream.get(ch);
+	}
+
+	// remove the spaces from the input
+	for (int i = 0; i < string.length(); i++) {
+		if (string[i] == ' ') {
+			string.erase(string.begin() + i);
+		}
+	}
+
+	p.m_coeff.clear();
+	p.m_degree = -1;
+
+
+	int start_pos = 0, end_pos, start_coeff, end_coeff, curr_degree = 0, sign, substr_degree;
+	double coeff;
+	std::string substring;
+	bool finished = false;
+	while (!finished) {
+		
+		//find + or - or '\0'
+		end_pos = 0;
+		for (int i = start_pos + 1; i < string.length(); i++) {
+			if (string[i] == '+' || string[i] == '-') {
+				end_pos = i;
+				break;
+			}
+		}
+		if (end_pos == 0) {
+			// end of string
+			end_pos = string.length();
+			finished = true;
+		}
+
+		substring = string.substr(start_pos, end_pos - start_pos);
+
+		//get the sign
+		if (substring[0] == '-') {
+			sign = -1;
+		}
+		else {
+			sign = 1;
+		}
+
+		//get the coefficient
+		start_coeff = 0;
+		if (substring[0] == '+' || substring[0] == '-') {
+			start_coeff = 1;
+		}
+
+		end_coeff = substring.length();
+
+		for (int j = start_coeff + 1; j < substring.length(); j++) {
+			if (strchr("0123456789.", substring[j]) == NULL) {
+				end_coeff = j;
+				break;
+			}
+		}
+
+		coeff = std::stod(substring.substr(start_coeff, end_coeff));
+
+
+		//get degree
+		if (end_coeff == substring.length()) {
+			substr_degree = 0;
+		}
+		else {
+			// look for '^'
+			if (end_coeff + 2 >= substring.length()) {
+				substr_degree = 1;
+			}
+			else {
+				substr_degree = std::stoi(substring.substr(end_coeff + 3, substring.length() - (end_coeff + 3)));
+			}
+		}
+
+		// if the difference of degree is not 1, then fill the coefficients with 0
+
+		while (p.m_degree < substr_degree - 1) {
+			p.m_coeff.push_back(0);
+			p.m_degree++;
+		}
+
+		p.m_coeff.push_back(sign * coeff);
+		p.m_degree++;
+
+
+		start_pos = end_pos;
+	}
+
+
+	//reverse p
+	std::reverse(p.m_coeff.begin(), p.m_coeff.end());
+	return stream;
+}
+
+std::ostream & operator<<(std::ostream & stream, const Polynomial & p)
+{
+	Polynomial q = p;
+	stream << q.ToString();
+	return stream;
 }
 
 
