@@ -81,14 +81,6 @@ public:
 	//Methods
 	std::string ToString();
 
-	//This will be removed after implementing the << operator
-	void Print()
-	{
-		for (int i = 0; i < m_coeff.size(); i++) {
-			std::cout << m_coeff[i] << " ";
-		}
-		std::cout << "\n";
-	}
 protected:
 private:
 	std::vector<double> m_coeff;

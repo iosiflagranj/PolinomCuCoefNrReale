@@ -397,12 +397,7 @@ Polynomial operator%(double x, const Polynomial & p)
 
 Polynomial operator%(const Polynomial & p, double x)
 {
-	Polynomial r, q;
-	q.m_coeff[0] = x;
-	q.m_degree = 0;
-
-	r = p % q;
-
+	Polynomial r;
 	return r;
 }
 
